@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sports Passion – Your Game, Our Gear | Bengaluru</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #FF5E00;
+      --orange-light: #FF8A3C;
+      --yellow: #FFD000;
+      --black: #0A0A0A;
+      --dark: #111111;
+      --card: #161616;
+      --border: rgba(255,255,255,0.07);
+      --muted: #888;
+      --white: #FAFAFA;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 2px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 5%;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 1.6rem;
+      letter-spacing: 0.03em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--orange); }
+
+    .nav-links {
+      display: flex; gap: 2.2rem; list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+
+    .nav-cta {
+      background: var(--orange);
+      color: var(--white) !important;
+      padding: 0.55rem 1.4rem;
+      border-radius: 4px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--orange-light); color: var(--white) !important; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px; background: var(--white);
+      transition: all 0.3s;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 0 5%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+    }
+
+    /* Diagonal grid */
+    .hero-bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,94,0,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,94,0,0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    /* Glow blobs */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(255,94,0,0.18) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      border-radius: 50%;
+    }
+
+    .hero-blob2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,208,0,0.08) 0%, transparent 70%);
+      bottom: 50px; left: 10%;
+      border-radius: 50%;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 720px;
+      animation: fadeUp 0.8s ease forwards;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(255,94,0,0.12);
+      border: 1px solid rgba(255,94,0,0.35);
+      color: var(--orange-light);
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.4rem 1rem; border-radius: 50px;
+      margin-bottom: 1.8rem;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--orange); border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    h1 em { font-style: italic; color: var(--orange); }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--orange);
+      color: var(--white);
+      padding: 0.9rem 2rem;
+      border-radius: 6px;
+      font-weight: 600; font-size: 0.95rem;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      box-shadow: 0 0 0 rgba(255,94,0,0.4);
+    }
+    .btn-primary:hover {
+      background: var(--orange-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255,94,0,0.4);
+    }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent;
+      color: var(--white);
+      padding: 0.9rem 2rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-weight: 500; font-size: 0.95rem;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--orange);
+      background: rgba(255,94,0,0.06);
+    }
+
+    /* Hero stats */
+    .hero-stats {
+      position: absolute; bottom: 3rem; right: 5%;
+      display: flex; gap: 2.5rem; z-index: 2;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.6rem; font-weight: 900;
+      color: var(--orange); line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    /* ─── MARQUEE ─── */
+    .marquee-wrap {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,94,0,0.04);
+      overflow: hidden; padding: 0.9rem 0;
+    }
+    .marquee-track {
+      display: flex; gap: 0;
+      animation: marquee 25s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      display: flex; align-items: center; gap: 1.2rem;
+      padding: 0 2rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 1rem;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.45);
+    }
+    .marquee-item .dot { color: var(--orange); font-size: 1.2rem; }
+
+    /* ─── SECTION COMMONS ─── */
+    section { padding: 6rem 5%; }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 1.05; text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+    h2 span { color: var(--orange); }
+
+    .section-desc {
+      color: rgba(255,255,255,0.5);
+      font-size: 1rem; line-height: 1.7;
+      max-width: 500px; font-weight: 300;
+      margin-top: 0.8rem;
+    }
+
+    /* ─── CATEGORIES / SPORTS ─── */
+    #sports { padding-top: 5rem; }
+
+    .sports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem; margin-top: 3rem;
+    }
+
+    .sport-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 1.2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .sport-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,94,0,0.08) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .sport-card:hover { border-color: var(--orange); transform: translateY(-4px); }
+    .sport-card:hover::before { opacity: 1; }
+
+    .sport-icon { font-size: 2.8rem; margin-bottom: 0.8rem; display: block; }
+    .sport-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 1.1rem;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .sport-count {
+      font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem;
+    }
+
+    /* ─── PRODUCTS ─── */
+    .products-header {
+      display: flex; align-items: flex-end;
+      justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .product-card:hover { border-color: var(--orange); transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+
+    .product-img {
+      height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .product-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at center, rgba(255,94,0,0.08) 0%, transparent 70%);
+    }
+
+    .product-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--orange); color: var(--white);
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.25rem 0.6rem; border-radius: 4px;
+    }
+
+    .product-info { padding: 1.4rem; }
+    .product-cat {
+      font-size: 0.7rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--orange); margin-bottom: 0.4rem;
+    }
+    .product-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 1.25rem;
+      text-transform: uppercase; letter-spacing: 0.02em;
+      margin-bottom: 0.6rem;
+    }
+    .product-price {
+      font-size: 1.1rem; font-weight: 600; color: var(--white);
+    }
+    .product-price s { color: var(--muted); font-weight: 400; font-size: 0.9rem; margin-right: 0.4rem; }
+
+    .product-action {
+      margin-top: 1rem;
+      display: flex; gap: 0.6rem;
+    }
+    .btn-whatsapp {
+      flex: 1;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+      background: #25D366; color: #fff;
+      padding: 0.6rem 1rem; border-radius: 6px;
+      font-size: 0.82rem; font-weight: 600;
+      text-decoration: none; transition: opacity 0.2s;
+    }
+    .btn-whatsapp:hover { opacity: 0.85; }
+    .btn-call {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 0.6rem 1rem; border-radius: 6px;
+      font-size: 0.82rem; font-weight: 500;
+      text-decoration: none; transition: border-color 0.2s;
+    }
+    .btn-call:hover { border-color: var(--orange); }
+
+    /* ─── WHY US ─── */
+    #why {
+      background: linear-gradient(135deg, #111 0%, #0f0f0f 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .why-card {
+      padding: 2rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.025);
+      position: relative; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .why-card:hover { border-color: rgba(255,94,0,0.4); }
+
+    .why-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 4rem; font-weight: 900;
+      color: rgba(255,94,0,0.12);
+      position: absolute; top: -0.5rem; right: 1rem;
+      line-height: 1;
+    }
+    .why-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .why-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      margin-bottom: 0.6rem;
+    }
+    .why-text { font-size: 0.875rem; color: rgba(255,255,255,0.5); line-height: 1.7; }
+
+    /* ─── BRANDS ─── */
+    #brands { padding: 4rem 5%; }
+    .brands-title {
+      text-align: center; margin-bottom: 2.5rem;
+      font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .brands-strip {
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center;
+    }
+    .brand-tag {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.8rem 1.8rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 1.1rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      transition: all 0.25s;
+    }
+    .brand-tag:hover { border-color: var(--orange); color: var(--white); }
+
+    /* ─── TESTIMONIALS ─── */
+    #reviews { background: var(--dark); }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .review-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      position: relative;
+    }
+    .review-stars { color: var(--yellow); font-size: 1rem; margin-bottom: 1rem; letter-spacing: 2px; }
+    .review-text {
+      font-size: 0.9rem; color: rgba(255,255,255,0.6);
+      line-height: 1.75; font-style: italic;
+      margin-bottom: 1.4rem;
+    }
+    .review-text::before { content: '\201C'; color: var(--orange); font-size: 2rem; line-height: 0; vertical-align: -0.5rem; margin-right: 0.2rem; }
+    .reviewer { display: flex; align-items: center; gap: 0.8rem; }
+    .reviewer-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--yellow));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.85rem; color: var(--black);
+    }
+    .reviewer-name { font-weight: 600; font-size: 0.875rem; }
+    .reviewer-loc { font-size: 0.75rem; color: var(--muted); }
+
+    /* ─── MAP / CONTACT ─── */
+    #contact {
+      padding: 6rem 5%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+    }
+
+    .contact-info h2 { margin-bottom: 1.5rem; }
+
+    .contact-details { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.2rem; }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.2rem; border: 1px solid var(--border);
+      border-radius: 10px; background: var(--card);
+      transition: border-color 0.2s;
+    }
+    .contact-item:hover { border-color: rgba(255,94,0,0.3); }
+    .contact-item-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+    .contact-item-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.3rem; }
+    .contact-item-val { font-size: 0.95rem; font-weight: 500; line-height: 1.5; }
+    .contact-item-val a { color: var(--white); text-decoration: none; }
+    .contact-item-val a:hover { color: var(--orange); }
+
+    .map-embed {
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .map-embed iframe {
+      width: 100%; height: 420px; border: none; display: block;
+      filter: grayscale(50%) invert(90%) hue-rotate(180deg);
+    }
+
+    .cta-strip {
+      margin-top: 2rem;
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 5% 2rem;
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+    }
+    .footer-brand-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.6rem; font-weight: 900; margin-bottom: 0.8rem;
+    }
+    .footer-brand-name span { color: var(--orange); }
+    .footer-tagline { font-size: 0.875rem; color: var(--muted); line-height: 1.7; max-width: 280px; }
+    .footer-heading { font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1rem; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--orange); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      margin: 0 5%; padding: 1.5rem 0;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom p { font-size: 0.8rem; color: var(--muted); }
+    .footer-bottom span { color: var(--orange); }
+
+    /* ─── FLOATING WHATSAPP ─── */
+    .whatsapp-float {
+      position: fixed; bottom: 2rem; right: 2rem;
+      width: 56px; height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      z-index: 999;
+      animation: bounce 3s ease-in-out infinite;
+      transition: transform 0.2s;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-6px); }
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── MOBILE NAV ─── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; flex-direction: column; position: fixed; top: 65px; left: 0; right: 0; background: rgba(10,10,10,0.97); backdrop-filter: blur(20px); padding: 2rem; gap: 1.5rem; border-bottom: 1px solid var(--border); }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+      #hero { padding-top: 80px; min-height: auto; padding-bottom: 4rem; }
+      .hero-stats { position: static; margin-top: 3rem; justify-content: flex-start; flex-wrap: wrap; }
+      #contact { grid-template-columns: 1fr; }
+      footer { grid-template-columns: 1fr; gap: 2rem; }
+      h1 { font-size: 3.2rem; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Sports<span>Passion</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#sports">Sports</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact" class="nav-cta">Visit Us</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-bg">
+    <div class="hero-blob2"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">Now Open · Kattigenahalli, Bengaluru</div>
+    <h1>Fuel Your<br><em>Passion</em><br>For Sport</h1>
+    <p class="hero-sub">Bengaluru's neighbourhood sports destination — quality gear for cricket, football, badminton & more at prices every player deserves.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">&#127936; Shop Now</a>
+      <a href="https://wa.me/919000000000?text=Hi%20Sports%20Passion%2C%20I%20want%20to%20enquire%20about%20your%20products" class="btn-secondary" target="_blank">💬 WhatsApp Us</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">500<sup style="font-size:1.4rem">+</sup></div>
+      <div class="stat-label">Products</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">10<sup style="font-size:1.4rem">+</sup></div>
+      <div class="stat-label">Sports</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5K<sup style="font-size:1.4rem">+</sup></div>
+      <div class="stat-label">Happy Customers</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <!-- doubled for seamless loop -->
+    <div class="marquee-item"><span>🏏 Cricket</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🏸 Badminton</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>⚽ Football</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🏐 Volleyball</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🏓 Table Tennis</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🎱 Carrom</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🏋️ Fitness</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🏊 Swimming</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🎽 Sportswear</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🏏 Cricket</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🏸 Badminton</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>⚽ Football</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🏐 Volleyball</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🏓 Table Tennis</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🎱 Carrom</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🏋️ Fitness</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🏊 Swimming</span><span class="dot">✦</span></div>
+    <div class="marquee-item"><span>🎽 Sportswear</span><span class="dot">✦</span></div>
+  </div>
+</div>
+
+<!-- ─── SPORTS CATEGORIES ─── -->
+<section id="sports">
+  <div class="section-tag reveal">Categories</div>
+  <h2 class="reveal">Every Sport.<br><span>Every Player.</span></h2>
+  <p class="section-desc reveal">From weekend warriors to serious athletes — we stock everything you need.</p>
+  <div class="sports-grid">
+    <div class="sport-card reveal">
+      <span class="sport-icon">🏏</span>
+      <div class="sport-name">Cricket</div>
+      <div class="sport-count">Bats · Pads · Gloves · Helmets</div>
+    </div>
+    <div class="sport-card reveal">
+      <span class="sport-icon">🏸</span>
+      <div class="sport-name">Badminton</div>
+      <div class="sport-count">Rackets · Shuttles · Shoes</div>
+    </div>
+    <div class="sport-card reveal">
+      <span class="sport-icon">⚽</span>
+      <div class="sport-name">Football</div>
+      <div class="sport-count">Balls · Jerseys · Boots</div>
+    </div>
+    <div class="sport-card reveal">
+      <span class="sport-icon">🏐</span>
+      <div class="sport-name">Volleyball</div>
+      <div class="sport-count">Balls · Nets · Kneepads</div>
+    </div>
+    <div class="sport-card reveal">
+      <span class="sport-icon">🏓</span>
+      <div class="sport-name">Table Tennis</div>
+      <div class="sport-count">Paddles · Tables · Balls</div>
+    </div>
+    <div class="sport-card reveal">
+      <span class="sport-icon">🎱</span>
+      <div class="sport-name">Carrom</div>
+      <div class="sport-count">Boards · Coins · Strikers</div>
+    </div>
+    <div class="sport-card reveal">
+      <span class="sport-icon">🏋️</span>
+      <div class="sport-name">Fitness</div>
+      <div class="sport-count">Weights · Skipping · Yoga</div>
+    </div>
+    <div class="sport-card reveal">
+      <span class="sport-icon">🎽</span>
+      <div class="sport-name">Sportswear</div>
+      <div class="sport-count">Jerseys · Tracks · Shoes</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRODUCTS ─── -->
+<section id="products" style="padding-top: 0;">
+  <div class="products-header">
+    <div>
+      <div class="section-tag reveal">Featured Gear</div>
+      <h2 class="reveal">Top <span>Products</span></h2>
+    </div>
+    <a href="https://wa.me/919000000000?text=Hi%2C%20I%20want%20to%20see%20full%20catalogue" class="btn-secondary reveal" target="_blank" style="white-space:nowrap">Full Catalogue →</a>
+  </div>
+  <div class="products-grid">
+
+    <div class="product-card reveal">
+      <div class="product-img">
+        🏏
+        <div class="product-badge">Bestseller</div>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Cricket</div>
+        <div class="product-name">English Willow Bat</div>
+        <div class="product-price"><s>₹3,499</s> ₹2,799</div>
+        <div class="product-action">
+          <a href="https://wa.me/919000000000?text=Hi%2C%20I'm%20interested%20in%20the%20English%20Willow%20Bat" class="btn-whatsapp" target="_blank">💬 Enquire</a>
+          <a href="tel:+919000000000" class="btn-call">📞</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img">🏸</div>
+      <div class="product-info">
+        <div class="product-cat">Badminton</div>
+        <div class="product-name">Pro Racket Set</div>
+        <div class="product-price"><s>₹1,299</s> ₹999</div>
+        <div class="product-action">
+          <a href="https://wa.me/919000000000?text=Hi%2C%20I'm%20interested%20in%20the%20Badminton%20Racket%20Set" class="btn-whatsapp" target="_blank">💬 Enquire</a>
+          <a href="tel:+919000000000" class="btn-call">📞</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img">
+        ⚽
+        <div class="product-badge">New</div>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Football</div>
+        <div class="product-name">Match Football Size 5</div>
+        <div class="product-price"><s>₹899</s> ₹699</div>
+        <div class="product-action">
+          <a href="https://wa.me/919000000000?text=Hi%2C%20I'm%20interested%20in%20the%20Match%20Football" class="btn-whatsapp" target="_blank">💬 Enquire</a>
+          <a href="tel:+919000000000" class="btn-call">📞</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img">🧤</div>
+      <div class="product-info">
+        <div class="product-cat">Cricket</div>
+        <div class="product-name">Batting Gloves – Full Leather</div>
+        <div class="product-price"><s>₹799</s> ₹599</div>
+        <div class="product-action">
+          <a href="https://wa.me/919000000000?text=Hi%2C%20I'm%20interested%20in%20Batting%20Gloves" class="btn-whatsapp" target="_blank">💬 Enquire</a>
+          <a href="tel:+919000000000" class="btn-call">📞</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img">🎱</div>
+      <div class="product-info">
+        <div class="product-cat">Carrom</div>
+        <div class="product-name">Premium Carrom Board 4ft</div>
+        <div class="product-price"><s>₹2,499</s> ₹1,899</div>
+        <div class="product-action">
+          <a href="https://wa.me/919000000000?text=Hi%2C%20I'm%20interested%20in%20the%20Carrom%20Board" class="btn-whatsapp" target="_blank">💬 Enquire</a>
+          <a href="tel:+919000000000" class="btn-call">📞</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img">
+        🏃
+        <div class="product-badge">Hot Deal</div>
+      </div>
+      <div class="product-info">
+        <div class="product-cat">Fitness</div>
+        <div class="product-name">Sports Skipping Rope</div>
+        <div class="product-price"><s>₹349</s> ₹249</div>
+        <div class="product-action">
+          <a href="https://wa.me/919000000000?text=Hi%2C%20I'm%20interested%20in%20a%20Skipping%20Rope" class="btn-whatsapp" target="_blank">💬 Enquire</a>
+          <a href="tel:+919000000000" class="btn-call">📞</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img">🏐</div>
+      <div class="product-info">
+        <div class="product-cat">Volleyball</div>
+        <div class="product-name">Tuff Volleyball + Net Combo</div>
+        <div class="product-price"><s>₹1,199</s> ₹949</div>
+        <div class="product-action">
+          <a href="https://wa.me/919000000000?text=Hi%2C%20I'm%20interested%20in%20Volleyball%20set" class="btn-whatsapp" target="_blank">💬 Enquire</a>
+          <a href="tel:+919000000000" class="btn-call">📞</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img">🎽</div>
+      <div class="product-info">
+        <div class="product-cat">Sportswear</div>
+        <div class="product-name">Dri-Fit Jersey Set</div>
+        <div class="product-price"><s>₹699</s> ₹499</div>
+        <div class="product-action">
+          <a href="https://wa.me/919000000000?text=Hi%2C%20I'm%20interested%20in%20a%20Dri-Fit%20Jersey" class="btn-whatsapp" target="_blank">💬 Enquire</a>
+          <a href="tel:+919000000000" class="btn-call">📞</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── WHY US ─── -->
+<section id="why">
+  <div class="section-tag reveal">Why Choose Us</div>
+  <h2 class="reveal">Your Local<br><span>Sports Partner</span></h2>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-num">01</div>
+      <div class="why-icon">🎯</div>
+      <div class="why-title">Expert Advice</div>
+      <div class="why-text">Our team lives and breathes sport. We'll help you pick exactly the right gear for your game and skill level.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num">02</div>
+      <div class="why-icon">💰</div>
+      <div class="why-title">Best Prices</div>
+      <div class="why-text">Competitive pricing on every item. We believe quality sport gear should be accessible to every player.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num">03</div>
+      <div class="why-icon">⚡</div>
+      <div class="why-title">Same-Day Delivery</div>
+      <div class="why-text">Need it now? We offer same-day delivery across Kattigenahalli and surrounding areas.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num">04</div>
+      <div class="why-icon">🔧</div>
+      <div class="why-title">Stringing & Repair</div>
+      <div class="why-text">Badminton & tennis racket stringing, bat knocking — professional repair services in-store.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num">05</div>
+      <div class="why-icon">🏅</div>
+      <div class="why-title">Genuine Products</div>
+      <div class="why-text">100% genuine, brand-certified products. No fakes, no compromises — only real performance gear.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-num">06</div>
+      <div class="why-icon">📦</div>
+      <div class="why-title">Bulk Orders</div>
+      <div class="why-text">School tournaments, club kits, team jerseys — special discounts on bulk and institutional orders.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BRANDS ─── -->
+<section id="brands">
+  <div class="brands-title reveal">Brands We Stock</div>
+  <div class="brands-strip">
+    <div class="brand-tag reveal">SS</div>
+    <div class="brand-tag reveal">SG</div>
+    <div class="brand-tag reveal">MRF</div>
+    <div class="brand-tag reveal">Yonex</div>
+    <div class="brand-tag reveal">Cosco</div>
+    <div class="brand-tag reveal">Nivia</div>
+    <div class="brand-tag reveal">Vector X</div>
+    <div class="brand-tag reveal">Prokick</div>
+    <div class="brand-tag reveal">DSC</div>
+    <div class="brand-tag reveal">Stag</div>
+    <div class="brand-tag reveal">Kookaburra</div>
+    <div class="brand-tag reveal">Li-Ning</div>
+  </div>
+</section>
+
+<!-- ─── REVIEWS ─── -->
+<section id="reviews">
+  <div class="section-tag reveal">Customer Love</div>
+  <h2 class="reveal">What Players <span>Say</span></h2>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">Best sports shop in this area! Got my cricket kit at an amazing price. The owner was super helpful in choosing the right bat.</div>
+      <div class="reviewer">
+        <div class="reviewer-avatar">RK</div>
+        <div>
+          <div class="reviewer-name">Ravi Kumar</div>
+          <div class="reviewer-loc">Kattigenahalli</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">Ordered badminton shuttles and rackets for our club team. Delivered the same day and the quality is superb. Highly recommend!</div>
+      <div class="reviewer">
+        <div class="reviewer-avatar">PS</div>
+        <div>
+          <div class="reviewer-name">Priya Sharma</div>
+          <div class="reviewer-loc">Yelahanka</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★☆</div>
+      <div class="review-text">Very good collection of football gear. Bought jerseys for our school team and got a great bulk discount. Will come back!</div>
+      <div class="reviewer">
+        <div class="reviewer-avatar">AM</div>
+        <div>
+          <div class="reviewer-name">Arjun Menon</div>
+          <div class="reviewer-loc">Bagalur Cross</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="contact-info">
+    <div class="section-tag reveal">Find Us</div>
+    <h2 class="reveal">Visit <span>Our Store</span></h2>
+    <p class="section-desc reveal">Come in, browse around, and talk to our team. We're always happy to help you find your perfect gear.</p>
+    <div class="contact-details">
+      <div class="contact-item reveal">
+        <div class="contact-item-icon">📍</div>
+        <div>
+          <div class="contact-item-label">Address</div>
+          <div class="contact-item-val">1st Floor, Shop No. 10, Bagalur Main Road,<br>Near SLV Xerox Shop, Niranthara Layout,<br>Kattigenahalli, Sathanur, Bengaluru – 560064</div>
+        </div>
+      </div>
+      <div class="contact-item reveal">
+        <div class="contact-item-icon">🕐</div>
+        <div>
+          <div class="contact-item-label">Store Hours</div>
+          <div class="contact-item-val">Mon – Sat: 9:00 AM – 9:00 PM<br>Sunday: 10:00 AM – 7:00 PM</div>
+        </div>
+      </div>
+      <div class="contact-item reveal">
+        <div class="contact-item-icon">📞</div>
+        <div>
+          <div class="contact-item-label">Call / WhatsApp</div>
+          <div class="contact-item-val"><a href="tel:+919000000000">+91 90000 00000</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-strip">
+      <a href="https://maps.app.goo.gl/JPjj9nMPfi79GvpX9" class="btn-primary" target="_blank">🗺 Get Directions</a>
+      <a href="https://wa.me/919000000000?text=Hi%20Sports%20Passion%21%20I%20want%20to%20enquire%20about%20your%20products." class="btn-secondary" target="_blank">💬 WhatsApp Us</a>
+    </div>
+  </div>
+
+  <div class="map-embed reveal">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.5!2d77.617!3d13.094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae196ee892452f%3A0x3bcf24b9605a2595!2sSports%20Passion%20Kattigenahalli!5e0!3m2!1sen!2sin!4v1"
+      allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div>
+    <div class="footer-brand-name">Sports<span>Passion</span></div>
+    <p class="footer-tagline">Your neighbourhood sports destination in Kattigenahalli, Bengaluru. Gear up, play hard, and live the sport you love.</p>
+  </div>
+  <div>
+    <div class="footer-heading">Quick Links</div>
+    <ul class="footer-links">
+      <li><a href="#sports">Sports Categories</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#why">Why Choose Us</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-heading">Sports</div>
+    <ul class="footer-links">
+      <li><a href="#">Cricket</a></li>
+      <li><a href="#">Badminton</a></li>
+      <li><a href="#">Football</a></li>
+      <li><a href="#">Table Tennis</a></li>
+      <li><a href="#">Carrom</a></li>
+      <li><a href="#">Fitness</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2025 <span>Sports Passion</span>. All rights reserved. | Kattigenahalli, Bengaluru, Karnataka</p>
+  <p>Made with <span>♥</span> for sport</p>
+</div>
+
+<!-- ─── FLOATING WHATSAPP ─── -->
+<a href="https://wa.me/919000000000?text=Hi%20Sports%20Passion%21%20I%20want%20to%20enquire%20about%20your%20products." class="whatsapp-float" target="_blank" title="WhatsApp Us">💬</a>
+
+<!-- ─── SCRIPTS ─── -->
+<script>
+  // Hamburger nav
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Navbar shadow on scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 40) {
+      nav.style.boxShadow = '0 4px 30px rgba(0,0,0,0.5)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+  });
+
+  // Counter animation
+  function animateCount(el, target) {
+    let n = 0;
+    const step = Math.ceil(target / 60);
+    const timer = setInterval(() => {
+      n = Math.min(n + step, target);
+      el.textContent = n >= 1000 ? (n/1000).toFixed(0)+'K' : n+'+';
+      if (n >= target) clearInterval(timer);
+    }, 20);
+  }
+  const counters = document.querySelectorAll('.stat-num');
+  const vals = [500, 10, 5000];
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = [...counters].indexOf(e.target);
+        animateCount(e.target, vals[idx]);
+        counterObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObs.observe(c));
+</script>
+</body>
+</html>
